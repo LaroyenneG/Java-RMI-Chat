@@ -1,12 +1,14 @@
 package chat;
 
+import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Group {
+public class Group implements Serializable {
 
     private List<Message> messageList;
-    private List<User> userList;
+    private List<IUser> userList;
     private String name;
 
     public Group(String name) {
@@ -15,8 +17,24 @@ public class Group {
         messageList = new ArrayList<>();
     }
 
+    public boolean sendMessage(Message message) throws RemoteException {
 
-    public boolean addUser(User user) {
+        boolean b = userList.contains(message.getSender());
+
+        if (b) {
+
+            for (IUser u : userList) {
+                if (!u.equals(message.getSender())) {
+                    u.receiveMessage(message);
+                }
+            }
+
+        }
+
+        return b;
+    }
+
+    public boolean addUser(IUser user) {
 
         if (userList.contains(user)) {
             return false;
@@ -26,16 +44,23 @@ public class Group {
         return true;
     }
 
+    public boolean contains(IUser user) {
+        return userList.contains(user);
+    }
+
     @Override
     public String toString() {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("chat.Group ");
         builder.append(name);
-        builder.append(" :\n");
+        builder.append(" :\n\t");
         builder.append(userList);
 
         return new String(builder);
+    }
+
+    public String getName() {
+        return name;
     }
 }

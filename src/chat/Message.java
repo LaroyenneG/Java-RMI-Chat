@@ -1,14 +1,15 @@
 package chat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable {
 
-    private User from;
+    private IUser from;
     private String body;
     private Date date;
 
-    public Message(User from, String body) {
+    public Message(IUser from, String body) {
         this.body = body;
         this.from = from;
         date = new Date();
@@ -31,5 +32,9 @@ public class Message {
         builder.append(body);
 
         return new String(builder);
+    }
+
+    public IUser getSender() {
+        return from;
     }
 }
