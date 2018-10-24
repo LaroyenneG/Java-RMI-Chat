@@ -1,6 +1,7 @@
 package chat;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.Date;
 
 public class Message implements Serializable {
@@ -20,13 +21,17 @@ public class Message implements Serializable {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("chat.Message");
+        builder.append("Message");
         builder.append('\n');
         builder.append("At :");
         builder.append(date);
         builder.append('\n');
         builder.append("From :");
-        builder.append(from);
+        try {
+            builder.append(from.getName());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         builder.append('\n');
 
         builder.append(body);

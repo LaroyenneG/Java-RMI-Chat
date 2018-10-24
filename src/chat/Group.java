@@ -25,6 +25,7 @@ public class Group implements Serializable {
 
             for (IUser u : userList) {
                 if (!u.equals(message.getSender())) {
+                    messageList.add(message);
                     u.receiveMessage(message);
                 }
             }
@@ -34,13 +35,18 @@ public class Group implements Serializable {
         return b;
     }
 
-    public boolean addUser(IUser user) {
+    public boolean addUser(IUser user) throws RemoteException {
 
         if (userList.contains(user)) {
             return false;
         }
 
         userList.add(user);
+
+        for (IUser u : userList) {
+            u.printGroup(this);
+        }
+
         return true;
     }
 
@@ -55,7 +61,15 @@ public class Group implements Serializable {
 
         builder.append(name);
         builder.append(" :\n\t");
-        builder.append(userList);
+
+        for (IUser user : userList) {
+            try {
+                builder.append(user.getName());
+                builder.append(' ');
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
 
         return new String(builder);
     }

@@ -34,7 +34,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public boolean addInGroup(String name, IUser user) {
+    public boolean addInGroup(String name, IUser user) throws RemoteException {
 
         if (!userList.contains(user)) {
             return false;
@@ -78,7 +78,7 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public boolean buildNewGroup(String name, IUser user) {
+    public boolean buildNewGroup(String name, IUser user) throws RemoteException {
 
         if (!userList.contains(user)) {
             return false;

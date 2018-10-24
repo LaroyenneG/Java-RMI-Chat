@@ -60,6 +60,7 @@ public class MainClient {
 
             } while (!status);
 
+            System.out.println("You can write messages");
 
             String body;
 

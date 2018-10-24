@@ -24,6 +24,11 @@ public class User extends UnicastRemoteObject implements IUser, Serializable {
     }
 
     @Override
+    public void printGroup(Group group) {
+        System.out.println(group);
+    }
+
+    @Override
     public boolean equals(Object user) {
 
         if (user instanceof User) {
