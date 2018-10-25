@@ -29,15 +29,22 @@ public class Server extends UnicastRemoteObject implements IServer {
 
 
     @Override
-    public boolean register(IUser user) {
+    public boolean register(IUser user) throws RemoteException {
 
-        boolean b = userList.contains(user);
+        boolean b = true;
 
-        if (!b) {
+        for (IUser u : userList) {
+            if (u.getName().equals(user.getName())) {
+                b = false;
+                break;
+            }
+        }
+
+        if (b) {
             userList.add(user);
         }
 
-        return !b;
+        return b;
     }
 
     @Override

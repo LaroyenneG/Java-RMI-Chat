@@ -26,15 +26,5 @@ public class User extends UnicastRemoteObject implements IUser, Serializable {
     public void printGroup(Group group) throws RemoteException {
         System.out.println(group.toPrint());
     }
-
-    @Override
-    public boolean equals(Object user) {
-
-        if (user instanceof User) {
-            return ((User) user).name.equals(name);
-        }
-
-        return false;
-    }
 }
 
