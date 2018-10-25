@@ -1,24 +1,28 @@
 import chat.Server;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class MainServer {
 
     public static void main(String[] args) {
 
+        if (args.length != 1) {
+            System.err.println("Invalid argument number");
+            System.exit(-1);
+        }
+
         try {
             Server skeleton = new Server();
 
-            String url = "rmi://localhost/TestRMI";
+            Registry registry = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
 
-            LocateRegistry.createRegistry(1099);
+            registry.rebind("Chat", skeleton);
 
-            Naming.rebind(url, skeleton);
+            System.out.println("Server is started");
 
-        } catch (RemoteException | MalformedURLException e) {
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }

@@ -16,8 +16,15 @@ public class Server extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public List<Group> getListGroup() {
-        return groupList;
+    public List<String> getListGroup() throws RemoteException {
+
+        List<String> stringList = new ArrayList<>();
+
+        for (Group g : groupList) {
+            stringList.add(g.toPrint());
+        }
+
+        return stringList;
     }
 
 
@@ -41,8 +48,21 @@ public class Server extends UnicastRemoteObject implements IServer {
         }
 
         for (Group g : groupList) {
+
             if (g.getName().equals(name)) {
-                return g.addUser(user);
+
+                boolean b = g.addUser(user);
+
+                if (b) {
+
+                    List<Message> list = g.getMessageList();
+
+                    for (Message m : list) {
+                        user.receiveMessage(m);
+                    }
+                }
+
+                return b;
             }
         }
 

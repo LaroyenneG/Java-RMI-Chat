@@ -35,6 +35,10 @@ public class Group implements Serializable {
         return b;
     }
 
+    public List<Message> getMessageList() {
+        return messageList;
+    }
+
     public boolean addUser(IUser user) throws RemoteException {
 
         if (userList.contains(user)) {
@@ -54,8 +58,8 @@ public class Group implements Serializable {
         return userList.contains(user);
     }
 
-    @Override
-    public String toString() {
+
+    public String toPrint() throws RemoteException {
 
         StringBuilder builder = new StringBuilder();
 
@@ -63,12 +67,8 @@ public class Group implements Serializable {
         builder.append(" :\n\t");
 
         for (IUser user : userList) {
-            try {
-                builder.append(user.getName());
-                builder.append(' ');
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            builder.append(user.getName());
+            builder.append(' ');
         }
 
         return new String(builder);

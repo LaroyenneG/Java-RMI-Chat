@@ -16,22 +16,19 @@ public class Message implements Serializable {
         date = new Date();
     }
 
-    @Override
-    public String toString() {
+
+    public String toPrint() throws RemoteException {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("Message");
-        builder.append('\n');
+        builder.append("Message \n");
         builder.append("At :");
         builder.append(date);
         builder.append('\n');
         builder.append("From :");
-        try {
-            builder.append(from.getName());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+
+        builder.append(from.getName());
+
         builder.append('\n');
 
         builder.append(body);

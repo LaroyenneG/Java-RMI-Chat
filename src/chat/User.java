@@ -18,14 +18,13 @@ public class User extends UnicastRemoteObject implements IUser, Serializable {
     }
 
     @Override
-    public void receiveMessage(Message m) {
-        System.out.println("New massage :\n");
-        System.out.println(m);
+    public void receiveMessage(Message m) throws RemoteException {
+        System.out.println(m.toPrint());
     }
 
     @Override
-    public void printGroup(Group group) {
-        System.out.println(group);
+    public void printGroup(Group group) throws RemoteException {
+        System.out.println(group.toPrint());
     }
 
     @Override

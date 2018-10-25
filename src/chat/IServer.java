@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IServer extends Remote {
 
-    List<Group> getListGroup() throws RemoteException;
+    List<String> getListGroup() throws RemoteException;
 
     boolean register(IUser user) throws RemoteException;
 
